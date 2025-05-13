@@ -1,4 +1,4 @@
-import {Ionicons} from "@expo/vector-icons";
+import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
     View, Text, TextInput, KeyboardTypeOptions,
@@ -19,12 +19,18 @@ export default function CustomInput({ label, value, type = "text", onChange, req
     const [isSecureText, setIsSecureText] = useState(type === 'password');
 
     const isPasswordField = type === 'password';
+    
     const keyboardType: KeyboardTypeOptions =
         /*Flujos de control: operador ternario: */
         type === 'email' ? 'email-address' :
             type === 'number' ? 'numeric'
                 : 'default';
 
+    const icon =
+        type === 'email' ? 'email' :
+        type === 'password' ? 'lock' : 'text-fields';    
+        
+        
     const getError = () => {
         if (required && !value) return 'Este campo es obligatorio';
         /* evaluar si correo tiene @*/
@@ -39,6 +45,7 @@ export default function CustomInput({ label, value, type = "text", onChange, req
         <View style={styles.wrapper}>
             <View style={error && styles.inputError}>
                 <Text>{label}:</Text>
+                <MaterialIcons name={icon as any} size={20} color="#555" style={styles.icon} />
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
@@ -68,25 +75,27 @@ export default function CustomInput({ label, value, type = "text", onChange, req
 
 const styles = StyleSheet.create({
     wrapper: { marginBottom: 15 },
-    input: {
-        borderWidth: 1,
-        borderColor: '#736d6d',
-        padding: 10,
-        borderRadius: 5,
-        width: 250,
-    },
-    error: {
-        color: 'red',
-        fontSize: 12,
-    },
     inputContainer: {
-        alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: 'gray',
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 5,
+      paddingHorizontal: 10,
     },
     inputError: {
-        borderColor: 'red',
-    }
+      borderColor: 'red',
+    },
+    input: {
+      flex: 1,
+      padding: 10,
+    },
+    icon: {
+      marginRight: 8,
+    },
+    error: {
+      color: 'red',
+      fontSize: 12,
+    },
 })
 

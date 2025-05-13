@@ -1,7 +1,10 @@
-import { View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Button, TouchableOpacity, View, Text } from "react-native";
 import CustomInput from "../components/CustomInput";
-import { useState } from "react";
-export default function Login() {
+import React, { useState } from "react";
+
+
+export default function Login({ navigation }: any) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -20,6 +23,12 @@ export default function Login() {
                 value={password}
                 onChange={setPassword}
                 required={true} />
+
+            <TouchableOpacity onPress={() =>{navigation.navigate('HomeScreen', 
+                { email, password })}}>
+                <Text>Ingresar</Text>
+            </TouchableOpacity>
         </View>
+
     )
 }
