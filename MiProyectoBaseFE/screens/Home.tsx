@@ -8,7 +8,12 @@ export default function Home({ navigation, route }: any) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido, {email}</Text>
-     
+      <CustomButton 
+        title="Ir a Tabs"
+        onPress={() => {
+        navigation.navigate('Tabs', {email});
+        }}
+      />
     </View>
   );
 }
