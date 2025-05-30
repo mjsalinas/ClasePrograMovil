@@ -3,11 +3,20 @@ import { Button, TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import CustomInput from "../components/CustomInput";
 import React, { useState } from "react";
 import CustomButton from "../components/CustomButton";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login({ navigation }: any) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const {login, isAllowed} = useAuth();
+
+    const handleLogin = () => {
+        login(email);
+        if(isAllowed){
+            navigation.navigate('HomeScreen', { email, password });
+        }
+    }
     return (
         <View style={styles.container}>
             <View style={styles.backgroundCard}>
@@ -31,9 +40,7 @@ export default function Login({ navigation }: any) {
 
                 <CustomButton
                     title="Ingresar"
-                    onPress={() => {
-                        navigation.navigate('HomeScreen', { email, password });
-                    }}
+                    onPress={handleLogin}
                     variant="primary"
                 />
 
