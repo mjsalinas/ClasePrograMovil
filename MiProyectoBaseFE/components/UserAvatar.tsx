@@ -10,7 +10,7 @@ export default function UserAvatar({ name }: Props) {
   return (
     <View style={styles.container}>
       <FontAwesome name="user-circle" size={32} color="#555" />
-      <Image source={require('../assets/usuario.png')} style={styles.image} />
+      {/* <Image source={require('../assets/usuario.png')} style={styles.image} /> */}
       <Text style={styles.name}>{name}</Text>
     </View>
   );
