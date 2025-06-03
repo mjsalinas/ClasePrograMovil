@@ -1,59 +1,35 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {I18n} from "i18n-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-type Language = "es" | "en";
+type Language = "es" |"fr" | "en" | "de";
 
 interface LanguageContextProps {
     language: Language;
     changeLanguage: (lng: Language) => void
 }
-
 const translations = {
-  es: {
-    welcome: "Bienvenido",
-    settings: "Configuraciones",
-    profile: "Perfil",
-    login: "Inicia Sesión"
-  },
-  en: {
-    welcome: "Welcome",
-    settings: "Settings",
-    profile: "Profile",
-    login: "Log In"
-  },
-  de: {
-    welcome: "Willkommen",
-    settings: "Einstellungen",
-    profile: "Profil",
-    login: "Anmelden"
-  },
-  fr: {
-    welcome: "Bienvenue",
-    settings: "Paramètres",
-    profile: "Profil",
-    login: "Connexion"
-  },
-  zh: {
-    welcome: "欢迎",
-    settings: "设置",
-    profile: "个人资料",
-    login: "登录"
-  }
+  en: { welcome: 'Welcome', signIn: 'Sign in', login: 'Login', email: 'Email', language: 'Language', theme: 'Theme', settings: 'Settings' },
+  es: { welcome: 'Bienvenido', signIn: 'Inicia Sesión', login: 'Ingresar', email: 'Correo', language: 'Idioma', theme: 'Tema', settings: 'Configuración' },
+  fr: { welcome: 'Bienvenue', signIn: 'Connexion', login: 'Connexion', email: 'E-mail', language: 'Langue', theme: 'Thème', settings: 'Paramètres' },
+  de: { welcome: 'Wilkommen', signIn:'Anmelden', login: 'Anmelden', email: 'E-Mail', language: 'Sprache', theme: 'Thema', settings: 'Einstellungen' },
 };
 
 const i18n = new I18n(translations); 
-i18n.defaultLocale = "es";
+i18n.defaultLocale = "de";
 i18n.enableFallback = true;
-
-const LanguageContext = createContext<LanguageContextProps | null>(null);
+const LanguageContext = createContext<{
+     language: Language,
+    changeLanguage: (lng: Language) => void
+} | null>(null);
 
 export const useLanguage = () => {
     const context = useContext(LanguageContext);
     if (!context) throw new Error("useLanguage debe usarse dentro de LanguageProvider")
-};
+    return context;
+    };
 
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-    const [language, setLanguage] = useState<Language>("en");
+    const [language, setLanguage] = useState<Language>('es');
 
     useEffect (()=>{
         const loadLanguage = async () => {
@@ -61,7 +37,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
             if (storedLanguage) {
                 setLanguage(storedLanguage as Language);
                 i18n.locale = storedLanguage;
-            }else {
+            }else if(!i18n.locale) {
                 setLanguage(i18n.defaultLocale as Language);
                 i18n.locale = i18n.defaultLocale; 
             }
@@ -82,3 +58,5 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         </LanguageContext.Provider>
     )
 }
+
+export {i18n}
