@@ -4,12 +4,14 @@ import CustomInput from "../components/CustomInput";
 import React, { useState } from "react";
 import CustomButton from "../components/CustomButton";
 import { useAuth } from "../context/AuthContext";
+import { i18n, useLanguage } from "../context/LanguageContext";
 
 export default function Login({ navigation }: any) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const {login, isAllowed} = useAuth();
+    const {language} = useLanguage();
 
     const handleLogin = () => {
         login(email);
@@ -20,7 +22,7 @@ export default function Login({ navigation }: any) {
     return (
         <View style={styles.container}>
             <View style={styles.backgroundCard}>
-                <Text style={styles.title}>Iniciar Sesión</Text>
+                <Text style={styles.title}> {i18n.t('signIn')} </Text>
 
                 <CustomInput
                     label="Correo"
@@ -39,7 +41,7 @@ export default function Login({ navigation }: any) {
                 />
 
                 <CustomButton
-                    title="Ingresar"
+                    title={i18n.t('login')}
                     onPress={handleLogin}
                     variant="primary"
                 />
