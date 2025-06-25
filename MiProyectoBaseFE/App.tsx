@@ -5,12 +5,14 @@ import Home from './screens/Home';
 import TabsScreen from './screens/tabs/TabsScreen';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 
   return (
+    <ThemeProvider>
     <AuthProvider>
       <LanguageProvider>
         <NavigationContainer>
@@ -22,5 +24,7 @@ export default function App() {
         </NavigationContainer>
       </LanguageProvider>
     </AuthProvider>
+    </ThemeProvider>
+
   );
 }
