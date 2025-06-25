@@ -6,6 +6,7 @@ import TabsScreen from './screens/tabs/TabsScreen';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
+import RegisterBookScreen from './screens/books/RegisterBook';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
           <Stack.Navigator initialRouteName='Login'>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="HomeScreen" component={Home} />
+            <Stack.Screen name="RegisterBook" component={RegisterBookScreen} />
             <Stack.Screen name="Tabs" component={TabsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
